@@ -1,0 +1,36 @@
+/* game container */
+#gameview{
+    width: 60% !important;
+    height: auto!important; 
+    background-color: rgb(146, 142, 142);
+    left:20% ;
+    right: 20%;
+    top: 10%;
+    position: absolute;
+    padding: 2%;
+}
+/* the back of the card */
+.containerBackCard {
+    width: 14% !important;
+    height: 200% !important;
+    position: absolute;
+    background-color: black;
+    border-radius: 5px;
+}
+/* row container card */
+#containerCard{
+    display: flex;
+    margin-bottom: 5% !important;
+    width: 100% !important;
+    height: 20% !important;
+    position: relative;
+    padding: 2%;
+}
+/* particular card */
+.card00{
+    float:left !important;
+    margin-right: 10%;
+}
+.card01{
+    margin:auto
+}
