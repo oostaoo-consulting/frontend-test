@@ -1,124 +1,102 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from './store';
-import { shuffle } from '../utils/helpers';
 
-interface Card {
+type Card = {
   id: number;
-  img: string;
+  value: string;
   isFlipped: boolean;
   isMatched: boolean;
+};
+
+interface GameInfo {
+  gameStarted: boolean;
+  gameOver: boolean;
 }
 
-interface GameState {
+interface GameState extends GameInfo {
   cards: Card[];
-  flippedCards: Card[];
-  matchedCards: Card[];
-  attempts: number;
-  progress: number;
+  currentPair: number[];
+  score: number;
+  isPlaying: boolean;
+  timeRemaining: number;
 }
 
 const initialState: GameState = {
   cards: [],
-  flippedCards: [],
-  matchedCards: [],
-  attempts: 0,
-  progress: 0,
+  currentPair: [],
+  score: 0,
+  isPlaying: false,
+  timeRemaining: 60,
+  gameStarted: false,
+  gameOver: false,
 };
 
-const cardImages = [
-  'image1.png',
-  'image2.png',
-  'image3.png',
-  'image4.png',
-  'image5.png',
-  'image6.png',
-  'image7.png',
-  'image8.png',
-];
 
 const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    selectCards(state) {
-      const selectedCards = cardImages.reduce((acc: Card[], img, i) => {
-        const newCards = [
-          {
-            id: i * 2,
-            img: `/assets/images/${img}`,
-            isFlipped: false,
-            isMatched: false,
-          },
-          {
-            id: i * 2 + 1,
-            img: `/assets/images/${img}`,
-            isFlipped: false,
-            isMatched: false,
-          },
-        ];
-        return [...acc, ...newCards];
-      }, []);
-
-      state.cards = shuffle(Array.from(selectedCards));
-    },
-
     flipCard(state, action: PayloadAction<number>) {
-      const id = action.payload;
-      const card = state.cards.find((card) => card.id === id);
-
-      if (!card || card.isFlipped) {
+      const { cards, currentPair } = state;
+      const index = action.payload;
+    
+      if (currentPair.length === 2) {
         return;
       }
-
+    
+      if (index < 0 || index > cards.length - 1) {
+        return;
+      }
+    
+      const card = cards[index];
+    
+      if (card.isFlipped) {
+        return;
+      }
+    
       card.isFlipped = true;
-      state.flippedCards.push(card);
-
-      if (state.flippedCards.length === 2) {
-        state.attempts++;
-
-        const [card1, card2] = state.flippedCards;
-
-        if (card1.img === card2.img) {
+      currentPair.push(index);
+    
+      if (currentPair.length === 2) {
+        const card1 = cards[currentPair[0]];
+        const card2 = cards[currentPair[1]];
+    
+        if (card1.value === card2.value) {
           card1.isMatched = true;
           card2.isMatched = true;
-          state.matchedCards.push(card1, card2);
+          state.score += 2;
+        } else {
+          setTimeout(() => {
+            card1.isFlipped = false;
+            card2.isFlipped = false;
+          }, 1000);
         }
-
-        state.flippedCards = [];
+    
+        state.currentPair = [];
       }
     },
 
-    hideCards(state) {
-      state.cards.forEach((card) => {
-        if (!card.isMatched) {
-          card.isFlipped = false;
-        }
-      });
-
-      state.flippedCards = [];
+    startGame(state) {
+      state.isPlaying = true;
     },
 
-    resetCards(state) {
-      state.cards.forEach((card) => {
-        card.isFlipped = false;
-        card.isMatched = false;
-      });
-
-      state.cards = shuffle(state.cards);
-      state.flippedCards = [];
-      state.matchedCards = [];
-      state.attempts = 0;
+    endGame(state) {
+      state.isPlaying = false;
     },
 
-    checkMatch(state) {
-      const unmatchedCards = state.cards.filter((card) => !card.isMatched);
+    tick(state) {
+      state.timeRemaining -= 1;
+    },
 
-      const progress = ((cardImages.length - unmatchedCards.length) / cardImages.length) * 100;
-      state.progress = Math.floor(progress);
+    restartGame(state) {
+      state.cards = []; // réinitialisé dans Board.tsx
+      state.currentPair = []; // réinitialisé dans Board.tsx
+      state.score = 0; // réinitialisé dans Board.tsx
+      state.isPlaying = false; // réinitialisé dans Board.tsx
+      state.timeRemaining = 60; // réinitialisé dans Board.tsx
     },
   },
 });
 
-export const { selectCards, flipCard, hideCards, resetCards, checkMatch } = gameSlice.actions;
-export const selectGameState = (state: RootState) => state.game;
+export const { flipCard, startGame, endGame, tick, restartGame } = gameSlice.actions;
+
 export default gameSlice.reducer;

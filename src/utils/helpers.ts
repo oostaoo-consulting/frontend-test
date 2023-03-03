@@ -1,9 +1,9 @@
-// Helper function to shuffle an array
-export const shuffle = (array: any[]) => {
-    const shuffledArray = [...array];
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-    }
-    return shuffledArray;
-  };
+export default function formatTime(time: number) {
+  let hours = Math.floor(time / 3600).toString();
+  let minutes = Math.floor((time % 3600) / 60).toString();
+  let seconds = (time % 60).toString();
+
+  return [hours, minutes, seconds].reduce((red: string[], el) => {
+    return el.length < 2 ? red.concat(`0${el}`) : red.concat(el);
+  }, []).join(':');
+}

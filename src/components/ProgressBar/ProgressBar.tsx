@@ -1,22 +1,30 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import '../styles/progressBar.scss';
+import { FC } from "react";
+import './ProgressBar.scss'
 
-const ProgressBar = () => {
-  const progress = useSelector((state: RootState) => state.game.progress);
-  const color =
-    progress < 25
-      ? 'red'
-      : progress < 50
-      ? 'orange'
-      : progress < 75
-      ? 'yellow'
-      : progress < 100
-      ? 'green'
-      : 'blue';
+interface ProgressBarProps {
+  percentComplete: number;
+}
 
-  return <div className={`progressBar ${color}`} style={{ width: `${progress}%` }} />;
+const ProgressBar: FC<ProgressBarProps> = ({ percentComplete }) => {
+  const progressBarColor = () => {
+    if (percentComplete > 50) {
+      return "green";
+    } else if (percentComplete > 25) {
+      return "yellow";
+    } else {
+      return "red";
+    }
+  };
+
+  return (
+    <div className="progress-bar-container">
+      <div
+        className={`progress-bar progress-bar-${progressBarColor()}`}
+        style={{ width: `${percentComplete}%` }}
+      ></div>
+    </div>
+  );
 };
 
 export default ProgressBar;
+

@@ -1,0 +1,48 @@
+.card {
+  perspective: 140px;
+
+  &__inner {
+    width: 15%;
+    height: 100%;
+    position: relative;
+    transition: transform 400ms;
+    transform-style: preserve-3d;
+
+    cursor: pointer;
+
+    &_turned {
+      transform: rotateY(180deg);
+    }
+  }
+
+ 
+  &__front {
+    position: absolute;
+    height: 100%;
+    width: 15%;
+    backface-visibility: hidden;
+
+    padding: 10px;
+
+    border: 1px solid rgba(5, 94, 5, 0.3);
+    border-radius: 10px;
+
+    box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.1),
+      1px 1px 2px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &__back {
+    width: 15%;
+  }
+
+  &__front {
+    background: linear-gradient(35deg, #fff, rgb(224, 224, 224));
+    transform: rotateY(180deg);
+    pointer-events: none;
+  }
+
+  &__icon {
+    width: 15%;
+    object-fit: contain;
+  }
+}
