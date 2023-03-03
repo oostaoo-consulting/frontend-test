@@ -1,0 +1,38 @@
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 800px;
+    height: 800px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card {
+    position: relative;
+    width: calc(25% - 20px);
+    height: calc(25% - 20px);
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card-flipped {
+    transform: rotateY(180deg);
+  }
+  
+  .card-found {
+    background-color: #8bc34a;
+  }
+  
+  .card-not-found {
+    background-color: #f44336;
+  }
