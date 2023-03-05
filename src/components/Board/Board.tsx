@@ -1,5 +1,5 @@
 import Card from '../Cards/Card';
-import styles from './Board.module.scss';
+import styles from './Board.scss';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/rootReducers';
@@ -42,8 +42,10 @@ const Board = () => {
   };
   return (
     <>
-    <h1>Memory Game</h1>
-    <ul className={styles.game__field}>
+    <main className="board">
+    
+    <h1 className='board-title'>Memory Game</h1>
+    <ul className='board-controls'>
      
       {
         cards.map((card, index) => (
@@ -62,6 +64,7 @@ const Board = () => {
      <button className="reset-button" onClick={handleResetGame}>
      Reset Game
    </button>
+   </main>
    </>
     
   );

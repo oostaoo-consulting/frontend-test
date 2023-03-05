@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import {  useSelector } from 'react-redux';
 import { Card as CardType } from '../../types/cards';
 import { RootState } from '../../redux/rootReducers';
-import BackCards from '../../assets/images/back-card.png'
+import BackCards from '../../assets/images/back-card.png'; 
+import styles from './Card.module.scss';
 interface CardProps {
   index: number;
   card: CardType;
