@@ -1,17 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import rootReducer  from './store/store';
+import { hydrateRoot } from 'react-dom/client'
+import ReactDOM from 'react-dom/client';
+import { configureStore } from '@reduxjs/toolkit'
+import { Provider } from 'react-redux'
+import store from './redux/store';
 import App from './App';
 
-const store = configureStore({
-  reducer: rootReducer,
-});
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
 );
+root.render(
+  <React.StrictMode>
+    {/* ? Provide the store as prop */}
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);
+
+

@@ -1,6 +1,43 @@
-.game {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
+.board {
+  margin: 0 auto;
+  width: 70%;
+  max-width: 900px;
+  padding: 24px;
+  text-align: center;
+
+  .board-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+
+  .board-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+
+  .reset-button {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-right: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      background-color: #357a38;
+    }
+  }
+
+  .matched-count {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
 }
