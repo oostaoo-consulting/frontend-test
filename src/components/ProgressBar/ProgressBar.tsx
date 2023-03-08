@@ -1,5 +1,5 @@
 import { FC } from "react";
-import './ProgressBar.scss'
+import styles from './ProgressBar.module.scss'
 
 interface ProgressBarProps {
   percentComplete: number;
@@ -7,19 +7,21 @@ interface ProgressBarProps {
 
 const ProgressBar: FC<ProgressBarProps> = ({ percentComplete }) => {
   const progressBarColor = () => {
-    if (percentComplete > 50) {
-      return "green";
-    } else if (percentComplete > 25) {
-      return "yellow";
+    if (percentComplete > 80) {
+      return "_green";
+    } else if (percentComplete > 66) {
+      return "_orange";
+    } else if (percentComplete > 33) {
+      return "_yellow";
     } else {
-      return "red";
+      return "_red";
     }
   };
 
   return (
-    <div className="progress-bar-container">
+    <div className={styles.progress_bar_container}>
       <div
-        className={`progress-bar progress-bar-${progressBarColor()}`}
+        className={`${styles.progress_bar} ${styles[`progress_bar_${progressBarColor()}`]}`}
         style={{ width: `${percentComplete}%` }}
       ></div>
     </div>

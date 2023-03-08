@@ -1,43 +1,39 @@
 .board {
-  margin: 0 auto;
-  width: 70%;
-  max-width: 900px;
-  padding: 24px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  .board-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 16px;
-  }
+.board-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
-  .board-controls {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 16px;
-  }
+.board-controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 40%;
+  list-style: none;
+  gap: 2rem;
+  justify-content: space-between;
+  
+}
 
-  .reset-button {
-    background-color: #4caf50;
-    border: none;
-    color: white;
-    padding: 12px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-right: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+.reset-button {
+  margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
 
-    &:hover {
-      background-color: #357a38;
-    }
-  }
-
-  .matched-count {
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
+.reset-button:hover {
+  background-color: #2980b9;
 }

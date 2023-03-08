@@ -1,23 +1,29 @@
-.progress-bar-container {
-  background-color: #ddd;
+.progress_bar_container {
+  background-color: #bebebe;
   height: 20px;
   margin: 20px 0;
   border-radius: 10px;
+  width: 30%;
 
-  .progress-bar {
-    height: 100%;
+  .progress_bar {
+    width: 70%;
+    height: 20px;
     border-radius: 10px;
     transition: width 0.3s ease-in-out;
 
-    &-green {
+    &_green {
       background-color: green;
     }
 
-    &-yellow {
+    &_yellow {
       background-color: yellow;
     }
 
-    &-red {
+    &_orange {
+      background-color: orange;
+    }
+
+    &_red {
       background-color: red;
     }
   }
