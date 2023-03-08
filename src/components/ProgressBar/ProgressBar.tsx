@@ -17,12 +17,11 @@ const ProgressBar: FC<ProgressBarProps> = ({ percentComplete }) => {
       return "_red";
     }
   };
-
   return (
     <div className={styles.progress_bar_container}>
       <div
-        className={`${styles.progress_bar} ${styles[`progress_bar_${progressBarColor()}`]}`}
-        style={{ width: `${percentComplete}%` }}
+        className={`${styles.progress_bar} `}
+        style={{ width: `${percentComplete}%`, backgroundColor:`${progressBarColor}`}}
       ></div>
     </div>
   );

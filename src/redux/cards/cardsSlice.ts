@@ -63,14 +63,18 @@ interface CardsState {
   cards: Card[];
   flippedCardIndexes: number[];
   matchedCardIndexes: number[];
+  isStartedGame : boolean; 
+  chronoTimer : number; 
+  gameStatus: "not_started" | "started" | "win" | "lose";
 }
-
-
 
 const initialState: CardsState = {
   cards: CardsArray,
   flippedCardIndexes: [],
   matchedCardIndexes: [],
+  isStartedGame: false, 
+  chronoTimer : 60, 
+  gameStatus:  "not_started",
 };
 
 export const cardsSlice = createSlice({
@@ -120,7 +124,7 @@ export const cardsSlice = createSlice({
     },
     matchedCards: (state) => {
       const flippedCards = state.flippedCardIndexes.map((index) => state.cards[index]);
-      if (flippedCards[0].id === flippedCards[1].id) {
+      if (flippedCards[0].id === flippedCards[1].id) {// si dans flippedCards[] match alors on push dans matchCardIndexes
         flippedCards.forEach((card) => {
           state.matchedCardIndexes.push(card.id);
         });
@@ -132,6 +136,19 @@ export const cardsSlice = createSlice({
         card.isFlipped = true;
       });
     },
+    setGameStart: (state, action) =>{
+      state.isStartedGame = action.payload;
+    }, 
+    
+    setChronoTimer: (state, action) => {
+      state.chronoTimer = action.payload;
+    },
+    decrementTimer: (state) => {
+      state.chronoTimer --;
+    },
+    setGameStatus: (state, action: PayloadAction<"not_started" | "started" | "win" | "lose">) => {
+      state.gameStatus = action.payload;
+    },
   },
 });
 
@@ -142,6 +159,10 @@ export const {
   flipBackUnmatchedCards,
   matchedCards,
   flipAllCards,
+  setGameStart, 
+  setChronoTimer,
+  decrementTimer, 
+  setGameStatus
 } = cardsSlice.actions;
 
 export default cardsSlice.reducer;

@@ -1,35 +1,34 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setGameStart, decrementTimer } from "../../redux/cards/cardsSlice";
+import { RootState } from "../../redux/rootReducers";
 import styles from "./Timer.module.scss";
 
-type Props = {
-  timer: number;
-  running: boolean;
-  onStart: () => void;
+const Timer = () => {
+  const dispatch = useDispatch();
+  const { chronoTimer, isStartedGame } = useSelector(
+    (state: RootState) => state.cards
+  );
+
+  useEffect(() => {
+    if (chronoTimer === 0) {
+      dispatch(setGameStart(0));
+    }
+    if (isStartedGame && chronoTimer > 0) {
+      const timerId = setTimeout(() => {
+        dispatch(decrementTimer());
+      }, 1000);
+      return () => clearTimeout(timerId);
+    }
+  }, [isStartedGame, chronoTimer, dispatch]);
+ 
+  return (
+    <div className={styles.timer}>
+      <h3>Temps restant :</h3>
+      <p> {chronoTimer} s</p>
+
+    </div>
+  );
 };
-function formatTime(time : number){
-  let hours = Math.floor(time / 3600).toString();
-  let minutes = Math.floor((time % 3600) / 60).toString();
-  let seconds = (time % 60).toString();
-
-  return [hours, minutes, seconds]
-    .reduce((red: string[], el) => {
-      return el.length < 2 ? red.concat(`0${el}`) : red.concat(el);
-    }, [])
-    .join(":");
-}
-
-const Timer = ({ running, timer, onStart }: Props)  => (
-  <div className={styles.controls}>
-    <button
-      type="button"
-      className={styles.controls__button}
-      onClick={onStart}
-      disabled={running}
-    >
-      START
-    </button>
-
-    <p className={styles.controls__timer}>{formatTime(timer)}</p>
-  </div>
-);
 
 export default Timer;

@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .board-title {
@@ -37,3 +38,4 @@
 .reset-button:hover {
   background-color: #2980b9;
 }
+
