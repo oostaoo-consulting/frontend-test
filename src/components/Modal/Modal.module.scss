@@ -1,0 +1,58 @@
+
+.modalBackground {
+  position: absolute;
+ margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+
+  .modal {
+    position: relative;
+    top: 25%;
+    left: 40%;
+    width: 400px;
+    background-color: white;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .gif{
+      width: 220px;
+      height: 220px;
+    }
+    & ._win{
+      background-image: url('https://media.tenor.com/rE2qbwF2DnwAAAAM/i-win-you-lose.gif');
+
+
+    }
+    & ._lose{
+      background-image: url('https://media.tenor.com/ggSZDU_E2goAAAAi/meong-cat.gif');
+    }
+    .content{
+      display: flex;
+      flex-direction: column;
+
+      .message {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+  
+      .closeButton {
+        background-color: #007aff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+    }
+   
+  }
+}
+
+.no-scroll {
+  overflow: hidden;
+}
