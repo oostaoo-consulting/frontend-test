@@ -1,12 +1,15 @@
 import React from 'react';
-import { hydrateRoot } from 'react-dom/client'
 import ReactDOM from 'react-dom/client';
-import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import store from './redux/store';
-import App from './App';
+import App from './components/App/App';
 
 
+/**
+ * Description
+ * @param {any} document.getElementById('root'
+ * @returns {any}
+ */
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

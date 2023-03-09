@@ -77,6 +77,14 @@ const initialState: CardsState = {
   gameStatus:  "not_started",
 };
 
+/**
+ * that defines the actions and reducer for managing the state of a memory card game
+ * @param {"cards"} {name
+ * @param {any} initialState
+ * @param {any} reducers:{flipCard, resetCards, setCards, flip...
+ * @param {PayloadAction<number>} action
+ * @returns {any}
+ */
 export const cardsSlice = createSlice({
   name: "cards",
   initialState,
@@ -98,18 +106,18 @@ export const cardsSlice = createSlice({
       state.matchedCardIndexes = [];
     },
     setCards: (state, action: PayloadAction<Card[]>) => {
-      // Créer des cartes uniques à partir de `action.payload`
+      // Create unique cards
       const uniqueCards = action.payload.map((card, index) => {
         return {
           ...card,
-          id: index + 1, // IDs uniques allant de 1 à 8
+          id: index + 1, // unique ids from 1 to 8
         };
       });
     
-      // Créer des paires de cartes
+      // Create pairs of cards
       const cardPairs = [...uniqueCards, ...uniqueCards];
     
-      // Mélanger les cartes pour obtenir un ordre aléatoire
+      // Shuffle cards for random order
       const shuffledCards = shuffleCards(cardPairs);
     
       state.cards = shuffledCards;
@@ -124,7 +132,8 @@ export const cardsSlice = createSlice({
     },
     matchedCards: (state) => {
       const flippedCards = state.flippedCardIndexes.map((index) => state.cards[index]);
-      if (flippedCards[0].id === flippedCards[1].id) {// si dans flippedCards[] match alors on push dans matchCardIndexes
+      // if in flippedCards[] match then push in matchCardIndexes
+      if (flippedCards[0].id === flippedCards[1].id) {
         flippedCards.forEach((card) => {
           state.matchedCardIndexes.push(card.id);
         });
