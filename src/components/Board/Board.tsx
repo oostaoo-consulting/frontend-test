@@ -1,9 +1,9 @@
-import Card from "../Cards/Card";
-import styles from "./Board.module.scss";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/rootReducers";
-import Timer from "../Timer/Timer";
+import Card from '../Cards/Card';
+import styles from './Board.module.scss';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../redux/rootReducers';
+import Timer from '../Timer/Timer';
 import {
   setCards,
   resetCards,
@@ -13,17 +13,17 @@ import {
   setGameStart,
   setChronoTimer,
   decrementTimer,
-} from "../../redux/cards/cardsSlice";
+} from '../../redux/cards/cardsSlice';
 
-import ProgressBar from "../ProgressBar/ProgressBar";
-import Modal from "../Modal/Modal";
+import ProgressBar from '../ProgressBar/ProgressBar';
+import Modal from '../Modal/Modal';
 
 // actions to state of game
 const GameStatus = {
-  NOT_STARTED: "not_started",
-  STARTED: "started",
-  WIN: "win",
-  LOSE: "lose",
+  NOT_STARTED: 'not_started',
+  STARTED: 'started',
+  WIN: 'win',
+  LOSE: 'lose',
 };
 
 /**
@@ -40,9 +40,9 @@ const Board = () => {
   const [isStartedGame, setIsStartedGame] = useState(false);
   const percent = (matchedCardIndexes.length / cards.length) * 100;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  const [modalMessage, setModalMessage] = useState('');
 
-
+  console.log(matchedCardIndexes.length);
   useEffect(() => {
     dispatch(setCards(cards)); // initialize the cards
   }, [dispatch]);
@@ -62,100 +62,106 @@ const Board = () => {
   useEffect(() => {
     if (chronoTimer === 0) {
       setGameStatus(GameStatus.LOSE);
+    } else if (matchedCardIndexes.length === 16) {
+      setGameStatus(GameStatus.WIN);
+      clearInterval(chronoTimer);
     }
-  }, [chronoTimer]);
+  }, [chronoTimer, matchedCardIndexes]);
 
   // starts the game when you click on the first card
   const handleCardClick = (index: number) => {
     const flippedCount = flippedCardIndexes.length;
 
-    // checks if two cards are returned
+    // Checks if two cards are flipped
     if (flippedCount === 2) {
       return;
     }
-   //Dispatch the flipCard action to flip the clicked card
+
+    // Dispatch the flipCard action to flip the clicked card
     dispatch(flipCard(index));
 
     if (!isStartedGame) {
       setIsStartedGame(true);
       dispatch(setGameStart(true));
-      setGameStatus(GameStatus.STARTED); //indicate that the player has started the game
+      setGameStatus(GameStatus.STARTED);
     }
-// If only one card is turned up, he checks to see if it
-// matches another card turned up previously.
+
+    // If two cards are flipped, check if they match
     if (flippedCount === 1) {
       const [firstIndex] = flippedCardIndexes;
-      const isFirstCardMatched = matchedCardIndexes.includes(
-        cards[firstIndex].id
-      );
 
-      if (isFirstCardMatched || cards[firstIndex].id !== cards[index].id) {
+      // Check if the clicked card matches the first flipped card
+      if (cards[firstIndex].id !== cards[index].id) {
+        // Delay before flipping back unmatched cards
         setTimeout(() => {
           dispatch(flipBackUnmatchedCards());
         }, 1000);
       } else {
         dispatch(matchedCards());
-        if (matchedCardIndexes.length === 16) {
-          setGameStatus(GameStatus.WIN);
-        }
       }
     }
   };
-/**
- * This function uses the dispatch to send actions to the Redux store
- * and reset Game
- * @returns {any}
- */
+
+  /**
+   * This function uses the dispatch to send actions to the Redux store
+   * and reset Game
+   * @returns {any}
+   */
   const handleResetGame = () => {
     dispatch(resetCards());
     dispatch(setChronoTimer(60));
     setGameStatus(GameStatus.NOT_STARTED);
   };
-// render cards 
+  // render cards
   const renderCards = () => {
-    return cards.map((card, index) => (
-      <Card
-        key={index}
-        index={index}
-        card={card}
-        matchedCardIndexes={matchedCardIndexes}
-        flippedCardIndexes={flippedCardIndexes}
-        isFlipped={flippedCardIndexes.includes(index)}
-        isMatched={matchedCardIndexes.includes(index) && !card.isMatched}
-        handleClick={() => handleCardClick(index)}
-      />
-    ));
+    const distributing = cards.map((card, index) => {
+      return (
+        <>
+          <Card
+            key={index}
+            index={index}
+            card={card}
+            matchedCardIndexes={matchedCardIndexes}
+            flippedCardIndexes={flippedCardIndexes}
+            isFlipped={flippedCardIndexes.includes(index)}
+            isMatched={matchedCardIndexes.includes(index) && !card.isMatched}
+            handleClick={() => handleCardClick(index)}
+          />
+        </>
+      );
+    });
+    return distributing;
   };
 
-// close Modal and reload the window
+  // close Modal and reload the window
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setModalMessage("");
+    setModalMessage('');
     window.location.reload();
   };
 
   return (
     <>
-      <section className={styles["board"]} data-testid="board">
-        <ul className={styles["board-controls"]}>{renderCards()}</ul>
+      <section className={styles['board']} data-testid='board'>
+        <ul className={styles['board-controls']}>{renderCards()}</ul>
         <ProgressBar percentGameComplete={percent} />
         <Timer />
         <button
-          className={styles["reset-button"]}
-          data-testid="reset-button"
+          className={styles['reset-button']}
+          data-testid='reset-button'
           onClick={handleResetGame}
         >
           Reset Game
         </button>
         {gameStatus === GameStatus.WIN && (
           <Modal
-            message="You Win! Congratulations!"
+            message='You Win! Congratulations!'
             onClose={handleCloseModal}
           />
         )}
         {gameStatus === GameStatus.LOSE && (
           <Modal
-            message="You Lose! Better luck next time!"
+            message='You Lose! Better luck next time!'
             onClose={handleCloseModal}
           />
         )}

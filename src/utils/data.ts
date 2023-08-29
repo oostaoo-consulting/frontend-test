@@ -1,0 +1,58 @@
+export const CardsArray = [
+  {
+    id: 1,
+    imagePath: './images/cute-kitty-cat-head-1.png',
+    cardBackPath: './images/back-card.png',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 2,
+    imagePath: './images/cute-kitty-cat-head-2.png',
+    cardBackPath: './images/back-card.png',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 3,
+    imagePath: './images/cute-kitty-cat-head-3.png',
+    cardBackPath: './images/back-card.png',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 4,
+    imagePath: './images/cute-kitty-cat-head-4.png',
+    cardBackPath: './images/back-card.png',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 5,
+    imagePath: './images/cute-kitty-cat-head-5.png',
+    cardBackPath: './images/back-card.png',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 6,
+    imagePath: './images/cute-kitty-cat-head-6.png',
+    cardBackPath: './images/back-card.png',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 7,
+    imagePath: './images/cute-kitty-cat-head-7.png',
+    cardBackPath: './images/back-card.png',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 8,
+    imagePath: './images/cute-kitty-cat-head-8.png',
+    cardBackPath: './images/back-card.png',
+    isFlipped: false,
+    isMatched: false,
+  },
+];

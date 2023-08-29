@@ -4,7 +4,6 @@ export const shuffleCards = ([...arr]) => {
     const i = Math.floor(Math.random() * m--);
     [arr[m], arr[i]] = [arr[i], arr[m]];
   }
+  console.log(arr);
   return arr;
 };
-
-
